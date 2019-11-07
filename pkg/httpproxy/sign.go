@@ -75,7 +75,7 @@ func (a awsv4) sign(req *http.Request, secrets v1.SecretInterface, auth string) 
 	}
 	service, region := a.getServiceAndRegion(req.URL.Host)
 	sess := session.Must(session.NewSessionWithOptions(session.Options{
-		Config: aws.Config{Region: aws.String(region)}
+		Config: aws.Config{Region: aws.String(region)},
 	}))
 	awsSigner := v4.NewSigner(sess.Config.Credentials)
 	var body []byte
