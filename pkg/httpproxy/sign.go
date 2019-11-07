@@ -16,6 +16,7 @@ import (
 	"github.com/rancher/norman/httperror"
 
 	"github.com/aws/aws-sdk-go/aws/credentials"
+        "github.com/aws/aws-sdk-go/aws/session"
 	v4 "github.com/aws/aws-sdk-go/aws/signer/v4"
 	v1 "github.com/rancher/types/apis/core/v1"
 )
@@ -72,8 +73,10 @@ func (a awsv4) sign(req *http.Request, secrets v1.SecretInterface, auth string) 
 		return err
 	}
 	service, region := a.getServiceAndRegion(req.URL.Host)
-	creds := credentials.NewStaticCredentials(secret["accessKey"], secret["secretKey"], "")
-	awsSigner := v4.NewSigner(creds)
+	sess := session.Must(session.NewSessionWithOptions(session.Options{
+		Config: aws.Config{Region: aws.String(region)}
+	}))
+	awsSigner := v4.NewSigner(sess.Config.Credentials)
 	var body []byte
 	if req.Body != nil {
 		body, err = ioutil.ReadAll(req.Body)
