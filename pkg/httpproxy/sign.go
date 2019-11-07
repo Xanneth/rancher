@@ -15,7 +15,6 @@ import (
 
 	"github.com/rancher/norman/httperror"
 
-	"github.com/aws/aws-sdk-go/aws/credentials"
         "github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/aws"
 	v4 "github.com/aws/aws-sdk-go/aws/signer/v4"
