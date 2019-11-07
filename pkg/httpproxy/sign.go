@@ -68,7 +68,7 @@ func (b basic) sign(req *http.Request, secrets v1.SecretInterface, auth string) 
 }
 
 func (a awsv4) sign(req *http.Request, secrets v1.SecretInterface, auth string) error {
-	_, err := getAuthData(auth, secrets, []string{"credID"})
+	_, _, err := getAuthData(auth, secrets, []string{"credID"})
 	if err != nil {
 		return err
 	}
